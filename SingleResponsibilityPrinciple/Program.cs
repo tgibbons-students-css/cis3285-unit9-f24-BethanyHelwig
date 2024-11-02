@@ -23,7 +23,7 @@ namespace SingleResponsibilityPrinciple
             //Stream tradeStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Unit9_Trader.trades.txt");
             
             // URL to read trade file from
-            string tradeURL = "http://faculty.css.edu/tgibbons/trades4.txt";
+            string tradeURL = "http://raw.githubusercontent.com/tgibbons-css/CIS3285_Unit9_F24/refs/heads/master/SingleResponsibilityPrinciple/trades.txt";
             //Two different URLs for Restful API
             //string restfulURL = "http://localhost:22359/api/TradeData";
             string restfulURL = "http://unit9trader.azurewebsites.net/api/TradeData";
@@ -31,16 +31,16 @@ namespace SingleResponsibilityPrinciple
             ITradeValidator tradeValidator = new SimpleTradeValidator(logger);
 
             //These are three different trade providers that read from different sources
-            ITradeDataProvider fileProvider = new StreamTradeDataProvider(tradeStream, logger);
-            //ITradeDataProvider urlProvider = new URLTradeDataProvider(tradeURL, logger);
+            //ITradeDataProvider fileProvider = new StreamTradeDataProvider(tradeStream, logger);
+            ITradeDataProvider urlProvider = new URLTradeDataProvider(tradeURL, logger);
             //ITradeDataProvider restfulProvider = new RestfulTradeDataProvider(restfulURL, logger);
 
             ITradeMapper tradeMapper = new SimpleTradeMapper();
             ITradeParser tradeParser = new SimpleTradeParser(tradeValidator, tradeMapper);
             ITradeStorage tradeStorage = new AdoNetTradeStorage(logger);
 
-            TradeProcessor tradeProcessor = new TradeProcessor(fileProvider, tradeParser, tradeStorage);
-            //TradeProcessor tradeProcessor = new TradeProcessor(urlProvider, tradeParser, tradeStorage);
+            //TradeProcessor tradeProcessor = new TradeProcessor(fileProvider, tradeParser, tradeStorage);
+            TradeProcessor tradeProcessor = new TradeProcessor(urlProvider, tradeParser, tradeStorage);
 
             tradeProcessor.ProcessTrades();
 

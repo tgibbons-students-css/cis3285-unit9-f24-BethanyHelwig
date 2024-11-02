@@ -24,7 +24,7 @@ namespace SingleResponsibilityPrinciple.Tests
         {
             //Arrange
             ILogger logger = new ConsoleLogger();
-            string tradeURL = "http://faculty.css.edu/tgibbons/trades4.txt";
+            string tradeURL = "http://raw.githubusercontent.com/tgibbons-css/CIS3285_Unit9_F24/refs/heads/master/SingleResponsibilityPrinciple/trades.txt";
 
             ITradeDataProvider tradeProvider = new URLTradeDataProvider(tradeURL, logger);
 
